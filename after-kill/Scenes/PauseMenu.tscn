@@ -1,0 +1,180 @@
+[gd_scene load_steps=12 format=3 uid="uid://13ydwya31vdq"]
+
+[ext_resource type="Script" uid="uid://bllv41etux216" path="res://Scripts/pause_menu.gd" id="1_pause"]
+
+[sub_resource type="Shader" id="Shader_blur"]
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform float blur_radius = 1.5;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	vec2 pixel = SCREEN_PIXEL_SIZE * blur_radius;
+	vec4 col = texture(screen_texture, uv) * 0.36;
+	col += texture(screen_texture, uv + vec2(pixel.x, 0.0)) * 0.16;
+	col += texture(screen_texture, uv + vec2(-pixel.x, 0.0)) * 0.16;
+	col += texture(screen_texture, uv + vec2(0.0, pixel.y)) * 0.16;
+	col += texture(screen_texture, uv + vec2(0.0, -pixel.y)) * 0.16;
+	COLOR = col;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = SubResource("Shader_blur")
+shader_parameter/blur_radius = 1.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.12, 0.1, 0.08, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.45, 0.2, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_size = 10
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="SystemFont" id="SystemFont_lj4oq"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="SystemFont" id="SystemFont_qwhev"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.18, 0.12, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.5, 0.2, 0.45)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.25, 0.16, 0.12, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.68, 0.32, 0.65)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="SystemFont" id="SystemFont_5w4ur"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="SystemFont" id="SystemFont_ey1tb"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="SystemFont" id="SystemFont_siy43"]
+font_names = PackedStringArray("Consolas")
+
+[node name="PauseMenu" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_pause")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Overlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.03, 0.02, 0.6)
+
+[node name="Blur" type="ColorRect" parent="Overlay"]
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Overlay"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Overlay/Center"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="Overlay/Center/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 26
+
+[node name="VBox" type="VBoxContainer" parent="Overlay/Center/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="Overlay/Center/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_lj4oq")
+theme_override_font_sizes/font_size = 36
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Overlay/Center/Card/Margin/VBox"]
+modulate = Color(1, 1, 1, 0.6)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Press Esc to continue"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Overlay/Center/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_qwhev")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
+custom_minimum_size = Vector2(320, 42)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_5w4ur")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
+custom_minimum_size = Vector2(320, 40)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_ey1tb")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_siy43")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "Quit"

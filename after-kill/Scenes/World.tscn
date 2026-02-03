@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=3 uid="uid://scgs825pndlu"]
+
+[ext_resource type="PackedScene" uid="uid://dg06k1hkpf2bb" path="res://Scenes/Player.tscn" id="1_5cjrv"]
+[ext_resource type="PackedScene" uid="uid://7s7t34gf6n7g" path="res://Scenes/Level1.tscn" id="1_gjpho"]
+[ext_resource type="Texture2D" uid="uid://bu0occulxqd0n" path="res://Assets/crosshair.png" id="4_gjpho"]
+[ext_resource type="Script" uid="uid://doq51a1qet0su" path="res://Scripts/stopwatch.gd" id="5_45d1s"]
+[ext_resource type="Script" uid="uid://bl71xruh3swx1" path="res://Scripts/crosshair.gd" id="5_p70al"]
+[ext_resource type="Script" uid="uid://dp7wli2ohinhn" path="res://Scripts/end_screen.gd" id="6_endscreen"]
+[ext_resource type="PackedScene" uid="uid://c4g34q0u7r6e4" path="res://Scenes/PauseMenu.tscn" id="7_pause_scene"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5cjrv"]
+sky_top_color = Color(0.16592956, 0.7476606, 1, 1)
+sky_horizon_color = Color(1.1534841, 1.4449953, 1.5708252, 1)
+ground_bottom_color = Color(0.16470589, 0.7490196, 1, 1)
+ground_horizon_color = Color(1.1534841, 1.4449953, 1.5708252, 1)
+
+[sub_resource type="Sky" id="Sky_j0p05"]
+sky_material = SubResource("ProceduralSkyMaterial_5cjrv")
+
+[sub_resource type="Environment" id="Environment_5nsto"]
+background_mode = 2
+sky = SubResource("Sky_j0p05")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="World" type="Node3D"]
+
+[node name="Level1" parent="." instance=ExtResource("1_gjpho")]
+
+[node name="Player" parent="." instance=ExtResource("1_5cjrv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5nsto")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="TextureRect" parent="UI"]
+offset_right = 17.0
+offset_bottom = 17.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("4_gjpho")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("5_p70al")
+
+[node name="Stopwatch" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "00:00.00"
+script = ExtResource("5_45d1s")
+
+[node name="EndScreen" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("6_endscreen")
+
+[node name="Overlay" type="ColorRect" parent="EndScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Center" type="CenterContainer" parent="EndScreen/Overlay"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="EndScreen/Overlay/Center"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="RecordLabel" type="Label" parent="EndScreen/Overlay/Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Overall record: —"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="EndScreen/Overlay/Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Current time: 00:00.00"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="EndScreen/Overlay/Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="EndScreen/Overlay/Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Main Menu"
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pause_scene")]

@@ -1,0 +1,133 @@
+[gd_scene load_steps=5 format=3 uid="uid://bppbi62q8a6n6"]
+
+[ext_resource type="Script" uid="uid://dchb8d6r8ipht" path="res://Scripts/main_menu.gd" id="1_mainmenu"]
+
+[sub_resource type="SystemFont" id="SystemFont_tt5f1"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.18, 0.18, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.2, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_quit"]
+bg_color = Color(0.12, 0.12, 0.14, 0.9)
+border_width_top = 1
+border_color = Color(0.3, 0.3, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mainmenu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.055, 0.055, 0.07, 1)
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TopSpacer" type="Control" parent="MainVBox"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="MainVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.22, 0.22, 1)
+theme_override_colors/font_outline_color = Color(0.25, 0.02, 0.02, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("SystemFont_tt5f1")
+theme_override_font_sizes/font_size = 56
+text = "AfterKill"
+horizontal_alignment = 1
+
+[node name="SubtitleSpacer" type="Control" parent="MainVBox"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="Subtitle" type="Label" parent="MainVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "SELECT LEVEL"
+horizontal_alignment = 1
+
+[node name="LevelSpacer" type="Control" parent="MainVBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="LevelList" type="VBoxContainer" parent="MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Level1Button" type="Button" parent="MainVBox/LevelList"]
+custom_minimum_size = Vector2(280, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "Level 1"
+
+[node name="Level2Button" type="Button" parent="MainVBox/LevelList"]
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.38, 0.42, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+disabled = true
+text = "Level 2  —  Coming Soon"
+
+[node name="BottomSpacer" type="Control" parent="MainVBox"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomBar" type="MarginContainer" parent="MainVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 32
+
+[node name="HBox" type="HBoxContainer" parent="MainVBox/BottomBar"]
+layout_mode = 2
+alignment = 2
+
+[node name="QuitSpacer" type="Control" parent="MainVBox/BottomBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuitButton" type="Button" parent="MainVBox/BottomBar/HBox"]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_quit")
+text = "Quit"

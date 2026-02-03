@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dg06k1hkpf2bb"]
+
+[ext_resource type="Script" uid="uid://bxaxbcj7hmd7o" path="res://Scripts/player.gd" id="1_rpqav"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qbkls"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rpqav"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpqav"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 1.66
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rpqav"]
+emission_shape_offset = Vector3(0, 0, 1)
+direction = Vector3(1, 0, 1)
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_kyqiw"]
+size = Vector3(0.04, 0.04, 0.04)
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1_rpqav")
+
+[node name="PlayerCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qbkls")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6383064, 0)
+
+[node name="PlayerCam" type="Camera3D" parent="Head"]
+attributes = SubResource("CameraAttributesPractical_rpqav")
+fov = 37.849285
+
+[node name="KillParticles" type="GPUParticles3D" parent="Head/PlayerCam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77161384, -0.8033159)
+material_override = SubResource("StandardMaterial3D_rpqav")
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_rpqav")
+draw_pass_1 = SubResource("BoxMesh_kyqiw")
