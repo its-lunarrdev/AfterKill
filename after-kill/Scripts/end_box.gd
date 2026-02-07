@@ -1,6 +1,7 @@
 extends Area3D
 
 var triggered := false
+@onready var sfx_end: AudioStreamPlayer3D = $SFX_End
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -25,3 +26,4 @@ func _on_body_entered(body: Node3D) -> void:
 	var current_str: String = sw.get_formatted_time()
 	var record_str: String = sw.get_record_time()
 	end_screen.show_end_screen(current_str, record_str)
+	sfx_end.play()

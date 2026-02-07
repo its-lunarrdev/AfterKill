@@ -2,46 +2,45 @@ extends CharacterBody3D
 
 @export var speed := 15.0
 @export var gravity := 9.8
-@export var attack_range := 2.0
 @export var damage := 10
+@export var attack_cooldown := 0.5
 
 @onready var nav_agent: NavigationAgent3D = $NavAgent
 @onready var detection_area: Area3D = $DetectionArea
-@onready var mesh := $EnemyMesh
-@onready var mat: StandardMaterial3D = mesh.get_active_material(0)
+@onready var anim_player: AnimationPlayer = $EnemyMesh/AnimationPlayer
 
 var player: Node3D
 var state := IDLE
+var attack_timer := 0.0
 
 enum {
 	IDLE,
-	CHASE,
-	ATTACK
+	CHASE
 }
 
 func _ready():
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
-	if mat:
-		mesh.set_surface_override_material(0, mat.duplicate())
-		mat = mesh.get_surface_override_material(0)
 
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
+	if attack_timer > 0.0:
+		attack_timer -= delta
+
 	match state:
 		IDLE:
 			velocity.x = 0
 			velocity.z = 0
+			anim_player.play("CharacterArmature|Flying_Idle")
 
 		CHASE:
 			chase_player(delta)
-
-		ATTACK:
-			attack_player()
+			anim_player.play("CharacterArmature|Fast_Flying")
 
 	move_and_slide()
+	check_player_collision()
 
 func chase_player(delta):
 	if player == null:
@@ -55,27 +54,25 @@ func chase_player(delta):
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
 
-	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z))
+	var to_player = (player.global_position - global_position)
+	var opposite_pos = global_position - to_player
+	look_at(Vector3(opposite_pos.x, global_position.y, opposite_pos.z))
 
-	if global_position.distance_to(player.global_position) <= attack_range:
-		state = ATTACK
+	
 
-func attack_player():
-	if player == null:
-		state = IDLE
+func check_player_collision():
+	if attack_timer > 0.0:
 		return
 
-	velocity.x = 0
-	velocity.z = 0
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		var collider = c.get_collider()
 
-	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z))
-
-	if global_position.distance_to(player.global_position) > attack_range:
-		state = CHASE
-		return
-
-	if player.has_method("take_damage"):
-		player.take_damage(damage)
+		if collider and collider.is_in_group("Player"):
+			if collider.has_method("take_damage"):
+				anim_player.play("CharacterArmature|Punch")
+				collider.take_damage(damage)
+				attack_timer = attack_cooldown
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
@@ -86,7 +83,3 @@ func _on_body_exited(body):
 	if body == player:
 		player = null
 		state = IDLE
-
-func set_emission(multiplier: float):
-	if mat:
-		mat.emission_energy_multiplier = multiplier

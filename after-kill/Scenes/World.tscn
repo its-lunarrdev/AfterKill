@@ -1,12 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://scgs825pndlu"]
 
 [ext_resource type="PackedScene" uid="uid://dg06k1hkpf2bb" path="res://Scenes/Player.tscn" id="1_5cjrv"]
-[ext_resource type="PackedScene" uid="uid://7s7t34gf6n7g" path="res://Scenes/Level1.tscn" id="1_gjpho"]
+[ext_resource type="PackedScene" uid="uid://jvq47u7yqw2p" path="res://Scenes/Level1.tscn" id="1_gjpho"]
 [ext_resource type="Texture2D" uid="uid://bu0occulxqd0n" path="res://Assets/crosshair.png" id="4_gjpho"]
 [ext_resource type="Script" uid="uid://doq51a1qet0su" path="res://Scripts/stopwatch.gd" id="5_45d1s"]
 [ext_resource type="Script" uid="uid://bl71xruh3swx1" path="res://Scripts/crosshair.gd" id="5_p70al"]
 [ext_resource type="Script" uid="uid://dp7wli2ohinhn" path="res://Scripts/end_screen.gd" id="6_endscreen"]
-[ext_resource type="PackedScene" uid="uid://c4g34q0u7r6e4" path="res://Scenes/PauseMenu.tscn" id="7_pause_scene"]
+[ext_resource type="PackedScene" uid="uid://13ydwya31vdq" path="res://Scenes/PauseMenu.tscn" id="7_pause_scene"]
+[ext_resource type="AudioStream" uid="uid://do2ca3f81ypst" path="res://SoundEffects/skyscraper_seven-click-buttons-ui-menu-sounds-effects-button-7-203601.mp3" id="8_q2d71"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5cjrv"]
 sky_top_color = Color(0.16592956, 0.7476606, 1, 1)
@@ -20,15 +21,31 @@ sky_material = SubResource("ProceduralSkyMaterial_5cjrv")
 [sub_resource type="Environment" id="Environment_5nsto"]
 background_mode = 2
 sky = SubResource("Sky_j0p05")
+ambient_light_color = Color(0.20392157, 0, 0, 1)
+ambient_light_energy = 16.0
 tonemap_mode = 2
 glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_strength = 0.76
+glow_bloom = 0.49
+glow_blend_mode = 1
+fog_enabled = true
+fog_light_color = Color(1, 0, 0, 1)
+fog_sun_scatter = 0.42
+fog_density = 0.001
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(1, 0, 0, 1)
+volumetric_fog_emission = Color(1, 0, 0, 1)
+volumetric_fog_detail_spread = 3.9999993
 
 [node name="World" type="Node3D"]
 
 [node name="Level1" parent="." instance=ExtResource("1_gjpho")]
 
 [node name="Player" parent="." instance=ExtResource("1_5cjrv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.494686, 5.555816, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5nsto")
@@ -108,3 +125,6 @@ theme_override_font_sizes/font_size = 22
 text = "Main Menu"
 
 [node name="PauseMenu" parent="." instance=ExtResource("7_pause_scene")]
+
+[node name="SFX_Button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_q2d71")

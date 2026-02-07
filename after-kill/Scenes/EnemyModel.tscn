@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://gixlhnt141s5"]
+
+[ext_resource type="PackedScene" uid="uid://qmu48ruyraf0" path="res://Assets/Models/Alpaking.glb" id="1_io2ad"]
+
+[node name="Root Scene" instance=ExtResource("1_io2ad")]
+
+[node name="Skeleton3D" parent="RootNode/CharacterArmature" index="0"]
+bones/1/position = Vector3(3.1974214e-05, 0.016983371, -0.00603814)
+bones/1/rotation = Quaternion(0.33459362, 0.00020600278, 0.003547019, 0.9423558)
+bones/2/rotation = Quaternion(0.20385854, -0.0020187374, -0.002923042, 0.97899395)
+bones/3/rotation = Quaternion(0.2821908, -0.00026477274, -7.747182e-05, 0.9593583)
+bones/4/rotation = Quaternion(-0.5140883, -0.012284647, -0.5841251, 0.62798107)
+bones/5/rotation = Quaternion(0.09973223, -0.695578, -0.12116186, 0.70110244)
+bones/6/rotation = Quaternion(0.075742684, -0.0022282954, 0.036573194, 0.996454)
+bones/8/rotation = Quaternion(-0.51560825, 0.013915498, 0.57857895, 0.63182336)
+bones/9/rotation = Quaternion(0.099732235, 0.69557804, 0.121161774, 0.7011023)
+bones/10/rotation = Quaternion(0.075742744, 0.002228215, -0.036573168, 0.99645394)
+bones/12/position = Vector3(3.1974207e-05, 0.01700859, -0.0060195765)
+bones/12/rotation = Quaternion(0.9290069, -0.012154071, -0.0036230441, -0.36984506)
+
+[node name="Head" parent="RootNode/CharacterArmature/Skeleton3D" index="0"]
+transform = Transform3D(0.99999964, 1.0005465e-08, -0.0005504959, 5.184987e-05, -0.9955561, 0.094168246, -0.0005480496, -0.094168186, -0.9955559, -6.383773e-06, -0.0007217245, 0.022193491)
+
+[node name="Wing4_L" parent="RootNode/CharacterArmature/Skeleton3D" index="1"]
+transform = Transform3D(0.47771454, 0.8372917, -0.2659531, -0.87638116, 0.47527912, -0.077881545, 0.061192445, 0.2702813, 0.9608348, 0.016462618, 0.01070687, 0.024317525)
+
+[node name="Wing4_R" parent="RootNode/CharacterArmature/Skeleton3D" index="2"]
+transform = Transform3D(0.47771454, -0.8372921, 0.26595327, 0.8763812, 0.475279, -0.0778816, -0.061192304, 0.27028167, 0.96083486, -0.016462622, 0.010706866, 0.024317523)
+
+[node name="Body1" parent="RootNode/CharacterArmature/Skeleton3D" index="3"]
+transform = Transform3D(0.99967825, -0.025262685, 0.0022582333, 0.015722387, 0.6870891, 0.7264027, -0.019902496, -0.72613364, 0.68726516, 1.8856645e-05, 0.006020721, 0.016984435)

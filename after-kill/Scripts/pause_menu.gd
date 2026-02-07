@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var restart_btn: Button = $Overlay/Center/Card/Margin/VBox/RestartButton
 @onready var menu_btn: Button = $Overlay/Center/Card/Margin/VBox/MenuButton
 @onready var quit_btn: Button = $Overlay/Center/Card/Margin/VBox/QuitButton
+@onready var sfx_button: AudioStreamPlayer = $SFX_Button
 
 var _animating := false
 
@@ -45,22 +46,31 @@ func _pause_game() -> void:
 	_animate_in()
 
 func _resume_game() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	_animate_out()
 
 func _on_resume_pressed() -> void:
+	sfx_button.play()
 	_resume_game()
 
 func _on_restart_pressed() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_menu_pressed() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	get_tree().paused = false
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_quit_pressed() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	get_tree().quit()
 
 func _is_end_screen_visible() -> bool:

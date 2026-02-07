@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://13ydwya31vdq"]
+[gd_scene load_steps=16 format=3 uid="uid://13ydwya31vdq"]
 
 [ext_resource type="Script" uid="uid://bllv41etux216" path="res://Scripts/pause_menu.gd" id="1_pause"]
+[ext_resource type="AudioStream" uid="uid://do2ca3f81ypst" path="res://SoundEffects/skyscraper_seven-click-buttons-ui-menu-sounds-effects-button-7-203601.mp3" id="2_qwhev"]
 
 [sub_resource type="Shader" id="Shader_blur"]
 code = "shader_type canvas_item;
@@ -24,58 +25,43 @@ void fragment() {
 shader = SubResource("Shader_blur")
 shader_parameter/blur_radius = 1.5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
-bg_color = Color(0.12, 0.1, 0.08, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.45, 0.2, 0.4)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_size = 10
-shadow_offset = Vector2(0, 6)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lj4oq"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_lj4oq"]
 font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_qwhev"]
 font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
-bg_color = Color(0.18, 0.12, 0.1, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.85, 0.5, 0.2, 0.45)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
-bg_color = Color(0.25, 0.16, 0.12, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 0.68, 0.32, 0.65)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwhev"]
+bg_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_5w4ur"]
 font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w4ur"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_ey1tb"]
 font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ey1tb"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_siy43"]
 font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_siy43"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxrls"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 
 [node name="PauseMenu" type="CanvasLayer"]
 layer = 5
@@ -111,7 +97,7 @@ grow_vertical = 2
 [node name="Card" type="PanelContainer" parent="Overlay/Center"]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+theme_override_styles/panel = SubResource("StyleBoxFlat_lj4oq")
 
 [node name="Margin" type="MarginContainer" parent="Overlay/Center/Card"]
 layout_mode = 2
@@ -148,8 +134,7 @@ custom_minimum_size = Vector2(320, 48)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_qwhev")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qwhev")
 text = "Resume"
 
 [node name="RestartButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
@@ -157,8 +142,7 @@ custom_minimum_size = Vector2(320, 42)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_5w4ur")
 theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5w4ur")
 text = "Restart"
 
 [node name="MenuButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
@@ -166,8 +150,7 @@ custom_minimum_size = Vector2(320, 40)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_ey1tb")
 theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ey1tb")
 text = "Main Menu"
 
 [node name="QuitButton" type="Button" parent="Overlay/Center/Card/Margin/VBox"]
@@ -175,6 +158,9 @@ custom_minimum_size = Vector2(320, 38)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_siy43")
 theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_siy43")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yxrls")
 text = "Quit"
+
+[node name="SFX_Button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_qwhev")

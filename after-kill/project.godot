@@ -11,9 +11,16 @@ config_version=5
 [application]
 
 config/name="AfterKill"
+config/description="AfterKill is a Fast Paced Movement Rougelike, inspired by Movement heavy games like BloodThief (which I am kinda obsessed with). The Core Mechanic is swapping positions, where you also kill the enemy. Have fun and check out my channel.
+https://youtube.com/@lunarrdev"
+config/version="0.20"
 run/main_scene="res://Scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://c4i8yoveenitm"
+
+[autoload]
+
+MenuMusic="*res://Scenes/MenuMusic.tscn"
 
 [display]
 
@@ -78,3 +85,7 @@ reset_times={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bppbi62q8a6n6"]
+[gd_scene load_steps=6 format=3 uid="uid://bppbi62q8a6n6"]
 
 [ext_resource type="Script" uid="uid://dchb8d6r8ipht" path="res://Scripts/main_menu.gd" id="1_mainmenu"]
+[ext_resource type="AudioStream" uid="uid://do2ca3f81ypst" path="res://SoundEffects/skyscraper_seven-click-buttons-ui-menu-sounds-effects-button-7-203601.mp3" id="2_853f1"]
 
 [sub_resource type="SystemFont" id="SystemFont_tt5f1"]
 font_names = PackedStringArray("Consolas")
@@ -131,3 +132,6 @@ theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
 theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_quit")
 text = "Quit"
+
+[node name="SFX_Button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_853f1")

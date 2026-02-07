@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlwa8btbgqefj"]
+
+[ext_resource type="AudioStream" uid="uid://bqjy815u1l7jx" path="res://SoundEffects/liecio-loop-menu-preview-109594.mp3" id="1_audmt"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_audmt")
+autoplay = true

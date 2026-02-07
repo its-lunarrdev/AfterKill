@@ -1,17 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cadxqi8xqbxnb"]
+[gd_scene load_steps=5 format=3 uid="uid://cadxqi8xqbxnb"]
 
 [ext_resource type="Script" uid="uid://dn4xwgd31qoge" path="res://Scripts/enemy_ai.gd" id="1_cshhr"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_quc66"]
-albedo_color = Color(1, 0, 0, 1)
-emission_enabled = true
-emission = Color(1, 0.29803923, 0, 1)
-emission_energy_multiplier = 0.0
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_b4xnx"]
-material = SubResource("StandardMaterial3D_quc66")
+[ext_resource type="PackedScene" uid="uid://qmu48ruyraf0" path="res://Assets/Models/Alpaking.glb" id="2_wacs0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r1vdb"]
+radius = 0.8952637
+height = 2.2375488
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_quc66"]
 radius = 33.0
@@ -20,10 +14,8 @@ radius = 33.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_cshhr")
 
-[node name="EnemyMesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_b4xnx")
-
 [node name="EnemyCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.1120633, 0, 0.1268835, -0.111703515)
 shape = SubResource("CapsuleShape3D_r1vdb")
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
@@ -32,3 +24,6 @@ shape = SubResource("CapsuleShape3D_r1vdb")
 
 [node name="DetectionCollider" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_quc66")
+
+[node name="EnemyMesh" parent="." instance=ExtResource("2_wacs0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1354306, 0)

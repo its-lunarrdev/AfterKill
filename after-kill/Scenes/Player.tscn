@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dg06k1hkpf2bb"]
+[gd_scene load_steps=9 format=3 uid="uid://dg06k1hkpf2bb"]
 
 [ext_resource type="Script" uid="uid://bxaxbcj7hmd7o" path="res://Scripts/player.gd" id="1_rpqav"]
+[ext_resource type="AudioStream" uid="uid://caa1hkwf1kjsx" path="res://SoundEffects/dragon-studio-simple-whoosh-382724.wav.mp3" id="2_kyqiw"]
+[ext_resource type="AudioStream" uid="uid://cow5kpushxshk" path="res://SoundEffects/freesound_crunchpixstudio-rpg-sword-attack-combo19-388939.mp3" id="3_gntrk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qbkls"]
 
@@ -40,7 +42,16 @@ fov = 37.849285
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77161384, -0.8033159)
 material_override = SubResource("StandardMaterial3D_rpqav")
 emitting = false
+amount = 50
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_rpqav")
 draw_pass_1 = SubResource("BoxMesh_kyqiw")
+
+[node name="SFX_Dash" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_kyqiw")
+volume_db = -24.0
+
+[node name="SFX_Pop" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_gntrk")
+volume_db = -24.0

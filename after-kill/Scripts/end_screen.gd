@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var time_label: Label = $Overlay/Center/VBox/TimeLabel
 @onready var restart_btn: Button = $Overlay/Center/VBox/RestartButton
 @onready var menu_btn: Button = $Overlay/Center/VBox/MenuButton
+@onready var sfx_button: AudioStreamPlayer = $"../SFX_Button"
 
 const MAIN_MENU_SCENE := "res://Scenes/MainMenu.tscn"
 
@@ -25,11 +26,15 @@ func show_end_screen(current_time: String, record_time: String) -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_restart_pressed() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_menu_pressed() -> void:
+	sfx_button.play()
+	await get_tree().create_timer(0.15).timeout
 	get_tree().paused = false
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

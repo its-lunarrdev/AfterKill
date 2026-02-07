@@ -24,10 +24,6 @@ const AIM_DOT_THRESHOLD := 0.985
 const SWAP_DASH_DURATION := 0.08
 const SWAP_DASH_SPEED := 90.0
 
-const EMISSION_BASE := 0.0
-const EMISSION_AIM := 300.0
-const EMISSION_LERP := 14.0
-
 const CAM_TILT_STRENGTH := 0.09
 const CAM_TILT_LERP := 12.0
 
@@ -64,7 +60,6 @@ var swap_dash_dir := Vector3.ZERO
 var swap_target_enemy : CharacterBody3D
 
 var cam_tilt := 0.0
-var emission_values := {}
 
 var suppress_enemy_collision := false
 
@@ -78,6 +73,8 @@ var air_boosts_remaining := MAX_AIR_BOOSTS
 @onready var head = $Head
 @onready var camera = $Head/PlayerCam
 @onready var particles = $Head/PlayerCam/KillParticles
+@onready var sfx_dash: AudioStreamPlayer3D = $SFX_Dash
+@onready var sfx_pop: AudioStreamPlayer3D = $SFX_Pop
 
 var respawn_canvas : CanvasLayer
 var respawn_label : Label
@@ -107,7 +104,7 @@ func _ready():
 # ============================================================
 
 func _unhandled_input(event):
-	# 🔁 Restart ANYTIME
+	# Restart ANYTIME
 	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
 		get_tree().reload_current_scene()
 		return
@@ -120,14 +117,11 @@ func _unhandled_input(event):
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-	# Pause handled by PauseMenu.
-
 # ============================================================
 # PHYSICS
 # ============================================================
 
 func _physics_process(delta):
-	update_enemy_emission(delta)
 	update_respawn_label()
 
 	if dash_cooldown_timer > 0.0:
@@ -202,6 +196,7 @@ func handle_jump():
 
 func handle_dash_input():
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0.0:
+		sfx_dash.play()
 		start_dash()
 
 func handle_swap_input():
@@ -269,6 +264,7 @@ func start_swap_dash(enemy):
 	velocity = Vector3.ZERO
 
 func perform_swap_kill():
+	sfx_pop.play()
 	state = PlayerState.NORMAL
 	suppress_enemy_collision = true
 
@@ -320,26 +316,6 @@ func camera_shake(strength, duration):
 # ============================================================
 # ENEMIES
 # ============================================================
-
-func update_enemy_emission(delta):
-	var cam_pos = camera.global_position
-	var best_enemy = null
-	var best_dot := AIM_DOT_THRESHOLD
-
-	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		if enemy is CharacterBody3D:
-			var to_enemy = (enemy.global_position - cam_pos).normalized()
-			var dot = -camera.global_transform.basis.z.normalized().dot(to_enemy)
-			if dot > best_dot:
-				best_dot = dot
-				best_enemy = enemy
-
-	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		if not emission_values.has(enemy):
-			emission_values[enemy] = EMISSION_BASE
-		var target = EMISSION_AIM if enemy == best_enemy else EMISSION_BASE
-		emission_values[enemy] = lerp(emission_values[enemy], target, delta * EMISSION_LERP)
-		enemy.set_emission(emission_values[enemy])
 
 func check_enemy_collision():
 	if suppress_enemy_collision:
